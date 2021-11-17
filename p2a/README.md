@@ -1,0 +1,21 @@
+The wish runs on 2 modes i.e. interactive and batch. 
+The following commands should be run in an infinite loop
+- Take the line as input. Then, trim leading and trailing white spaces.
+- Check if the first token (using strsep) is exit or not. If yes, then exit the program with 0 RC
+- if the first token is path, then the tokens following the "path" are the path where the executable is present.
+	- whenever a command is given, the path is prepended to the command
+	- then the access fn is used to check if the exectable is present or not.
+	- if no path works, then an error is thrown
+- if the first token is loop, then the following argument is the no. of times a program is run.
+	- The following tokens are the command and its arguments.
+	- when using strsep to extract tokens, check if $loop token exists. If yes, then replace the value with counter.
+- if the first token is cd, then run chdir to change the current directory.
+- if the first token doesn't match any of the above commands, then -
+	- call fork
+	- if redirection token (>) is present then
+		- the next token is the output file
+		- Therefore, close the standard output and open the file
+	- prepend the path to the command and use access to check if the executable is present or not.
+	- if it is present, then run the command using execv
+	- By that time, the parent process should wait for the child process to complete.
+- When the child process is completed, it should wait for the next command to be inputed
