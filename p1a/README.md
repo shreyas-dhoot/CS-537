@@ -22,4 +22,3 @@ For d command
 
 For a command
 - Iterate over every element in the list and print it.
-- 
